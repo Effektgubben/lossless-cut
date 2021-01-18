@@ -97,6 +97,7 @@ const App = memo(() => {
   const [playing, setPlaying] = useState(false);
   const [playerTime, setPlayerTime] = useState();
   const [duration, setDuration] = useState();
+  const [playbackRate, setPlaybackRate] = useState(0);  //TODO: Josef
   const [fileFormat, setFileFormat] = useState();
   const [fileFormatData, setFileFormatData] = useState();
   const [detectedFileFormat, setDetectedFileFormat] = useState();
@@ -577,9 +578,16 @@ const App = memo(() => {
   }, [debouncedSaveOperation, autoSaveProjectFile]);
 
   function onPlayingChange(val) {
+    const video = videoRef.current;
     setPlaying(val);
-    if (!val) {
-      setCommandedTime(videoRef.current.currentTime);
+    //TODO: Josef
+    //Start playing
+    if (val) {
+      video.playbackRate = Math.pow(2, playbackRate);
+    }
+    //Stop playing
+    else {
+      setCommandedTime(video.currentTime);
     }
   }
 
@@ -1980,7 +1988,6 @@ const App = memo(() => {
   const { t } = useTranslation();
 
   // throw new Error('Test');
-
   return (
     <div>
       <div className="no-user-select" style={{ background: controlsBackground, height: topBarHeight, display: 'flex', alignItems: 'center', padding: '0 5px', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -2215,6 +2222,9 @@ const App = memo(() => {
           keyframesEnabled={keyframesEnabled}
           toggleKeyframesEnabled={toggleKeyframesEnabled}
           simpleMode={simpleMode}
+
+          playbackRate={playbackRate}
+          setPlaybackRate={setPlaybackRate} //TODO: Josef
         />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', height: 36 }}>

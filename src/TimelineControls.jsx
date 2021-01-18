@@ -15,6 +15,10 @@ const TimelineControls = memo(({
   duration, jumpCutEnd, jumpCutStart, startTimeOffset, setCutTime, currentApparentCutSeg,
   playing, shortStep, togglePlay, setTimelineMode, hasAudio, hasVideo, timelineMode,
   keyframesEnabled, toggleKeyframesEnabled, seekClosestKeyframe, simpleMode,
+
+  playbackRate,
+  setPlaybackRate,//TODO: Josef
+
 }) => {
   const { t } = useTranslation();
 
@@ -224,6 +228,17 @@ const TimelineControls = memo(({
           title={t('Jump to end of video')}
           role="button"
           onClick={() => seekAbs(duration)}
+        />
+      )}
+
+      {!simpleMode && (
+        <input
+          type="number"
+          style={{ width: "32px" }}
+          title={t('Playback speed exponent: playback speed is 2^this')}
+          value={playbackRate}
+          step="0.5"
+          onChange={(e) => { setPlaybackRate(e.target.value) }}
         />
       )}
 

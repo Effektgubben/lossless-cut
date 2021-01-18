@@ -79,7 +79,9 @@ export default ({ path, width: inWidth, height: inHeight, streamIndex }) => {
     command();
   }
 
-  function play(playFrom) {
+    function play(playFrom) {
+        alert('aaa');
+        debugger;
     if (terminated) return;
     if (playing && commandedTime === playFrom) return;
     playing = true;
